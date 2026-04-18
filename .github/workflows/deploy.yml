@@ -6,9 +6,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  curl:
-    name: Kick deploy hook
+  deploy:
+    name: Trigger Cloudflare Pages rebuild
     runs-on: ubuntu-latest
     steps:
-      - name: curl
-        run: curl -X POST '${{ secrets.DEPLOY_HOOK_URL }}'
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger rebuild via empty commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore: trigger rebuild $(date +%Y-%m-%d)"
+          git push
