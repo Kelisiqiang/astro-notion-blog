@@ -1,3 +1,4 @@
+import mdx from '@astrojs/mdx';   // 加到顶部
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import { CUSTOM_DOMAIN, BASE_PATH } from './src/server-constants';
@@ -23,9 +24,9 @@ const getSite = function () {
     return new URL(
       BASE_PATH,
       `https://${new URL(process.env.CF_PAGES_URL).host
-        .split('.')
-        .slice(1)
-        .join('.')}`
+        。split('.')
+        。slice(1)
+        。join('.')}`
     ).toString();
   }
 
@@ -42,5 +43,6 @@ export default defineConfig({
     CustomIconDownloader(),
     FeaturedImageDownloader(),
     PublicNotionCopier(),
+    mdx(),                         // 加进去
   ],
 });
